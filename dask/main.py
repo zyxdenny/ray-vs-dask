@@ -9,7 +9,7 @@ from dask import delayed, compute
 from PIL import Image
 import numpy as np
 
-# 初始化 Dask 客户端
+
 client = Client('10.244.0.6:8786')  # Dask scheduler address and port
 
 def load_and_preprocess_image(image_path):
@@ -20,7 +20,7 @@ def load_and_preprocess_image(image_path):
         transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
     ])
     image = Image.open(image_path)
-    image = image.convert('RGB')  # 确保是 RGB
+    image = image.convert('RGB')  #
     image_tensor = preprocess(image)
     return image_tensor.numpy()
 
@@ -54,9 +54,9 @@ def run_image_processing(image_folder):
     final_results = dask.compute(*results, scheduler='threads')
     end_time = time.time()  # end
 
-    # 性能输出
+    # output
     total_time = end_time - start_time
-    print(f"Image processing completed in {total_normal_time:.2f} seconds.")
+    print(f"Image processing completed in {total_time:.2f} seconds.")
     if len(images_da) > 0:
         print(f"Average time per batch: {total_time / len(images_da):.2f} seconds")
 
